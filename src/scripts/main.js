@@ -13,19 +13,19 @@ const firstPromise = new Promise((resolve, reject) => {
   document.addEventListener('click', onClick);
 });
 
-firstPromise.then(() => {
+firstPromise.then((message) => {
   const div = document.createElement('div');
 
-  div.textContent = 'First promise was resolved';
+  div.textContent = message;
   div.dataset.qa = 'notification';
   div.classList.add('success');
   document.body.appendChild(div);
 });
 
-firstPromise.catch(() => {
+firstPromise.catch((message) => {
   const div = document.createElement('div');
 
-  div.textContent = 'First promise was rejected';
+  div.textContent = message;
   div.dataset.qa = 'notification';
   div.classList.add('error');
   document.body.appendChild(div);
@@ -42,10 +42,10 @@ const secondPromise = new Promise((resolve, reject) => {
   });
 });
 
-secondPromise.then(() => {
+secondPromise.then((message) => {
   const div = document.createElement('div');
 
-  div.textContent = 'Second promise was resolved';
+  div.textContent = message;
   div.dataset.qa = 'notification';
   div.classList.add('success');
   document.body.appendChild(div);
@@ -80,10 +80,10 @@ const thirdPromise = new Promise((resolve, reject) => {
   document.addEventListener('contextmenu', onContext);
 });
 
-thirdPromise.then(() => {
+thirdPromise.then((message) => {
   const div = document.createElement('div');
 
-  div.textContent = 'Third promise was resolved';
+  div.textContent = message;
   div.dataset.qa = 'notification';
   div.classList.add('success');
   document.body.appendChild(div);
