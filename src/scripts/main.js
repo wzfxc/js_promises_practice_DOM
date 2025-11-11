@@ -1,12 +1,13 @@
 'use strict';
 
 const firstPromise = new Promise((resolve, reject) => {
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     reject(new Error('First promise was rejected'));
   }, 3000);
 
   const onClick = () => {
     resolve('First promise was resolved');
+    clearTimeout(timer);
     document.removeEventListener('click', onClick);
   };
 
@@ -22,24 +23,30 @@ firstPromise.then((message) => {
   document.body.appendChild(div);
 });
 
-firstPromise.catch((message) => {
+firstPromise.catch((error) => {
   const div = document.createElement('div');
 
-  div.textContent = message;
+  div.textContent = error.message;
   div.dataset.qa = 'notification';
   div.classList.add('error');
   document.body.appendChild(div);
 });
 
 const secondPromise = new Promise((resolve, reject) => {
-  document.addEventListener('click', () => {
+  const onClick = () => {
     resolve('Second promise was resolved');
-  });
+    document.removeEventListener('click', onClick);
+  };
 
-  document.addEventListener('contextmenu', (e) => {
+  document.addEventListener('click', onClick);
+
+  const onContext = (e) => {
     e.preventDefault();
     resolve('Second promise was resolved');
-  });
+    document.removeEventListener('contextmenu', onContext);
+  };
+
+  document.addEventListener('contextmenu', onContext);
 });
 
 secondPromise.then((message) => {
